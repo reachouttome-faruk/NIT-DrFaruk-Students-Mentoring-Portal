@@ -97,13 +97,13 @@ export default function SubjectPerformanceForm({ defaultValues, onSubmit, onBack
                 <TableRow>
                   <TableHead className="min-w-[150px]">Subject Name *</TableHead>
                   <TableHead className="min-w-[100px]">Code *</TableHead>
-                  <TableHead className="min-w-[150px]">Faculty *</TableHead>
-                  <TableHead className="min-w-[200px]">Weaknesses</TableHead>
-                  <TableHead className="min-w-[120px]">CW Marks</TableHead>
-                  <TableHead className="min-w-[120px]">IA Marks</TableHead>
+                  <TableHead className="min-w-[150px]">Teaching Faculty *</TableHead>
+                  <TableHead className="min-w-[200px]">Weakness, if any, in the Subject</TableHead>
+                  <TableHead className="min-w-[150px]">Class Work & Assignments</TableHead>
+                  <TableHead className="min-w-[120px]">IA Performance</TableHead>
                   <TableHead className="min-w-[200px]">Expected Outcome</TableHead>
-                  <TableHead className="min-w-[250px]">Mentor Remarks</TableHead>
-                  <TableHead className="min-w-[200px]">Current Status</TableHead>
+                  <TableHead className="min-w-[280px]">Mentor Remarks with Action Plan to Achieve the Outcome</TableHead>
+                  <TableHead className="min-w-[200px]">Status of Outcome</TableHead>
                   <TableHead className="w-[50px]"></TableHead>
                 </TableRow>
               </TableHeader>

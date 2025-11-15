@@ -25,6 +25,12 @@ export const subjectPerformanceSchema = z.object({
   currentStatus: z.string(),
 });
 
+export const backlogSchema = z.object({
+  id: z.string(),
+  subjectNameWithCode: z.string().min(1, "Subject name with code is required"),
+  actionProposed: z.string().min(1, "Action proposed is required"),
+});
+
 export const otherParametersSchema = z.object({
   academicTrack: z.string(),
   attendance: z.string(),
@@ -43,10 +49,12 @@ export const otherParametersSchema = z.object({
 export const mentoringReportSchema = z.object({
   studentDetails: studentDetailsSchema,
   subjectPerformance: z.array(subjectPerformanceSchema),
+  backlogInformation: z.array(backlogSchema),
   otherParameters: otherParametersSchema,
 });
 
 export type StudentDetails = z.infer<typeof studentDetailsSchema>;
 export type SubjectPerformance = z.infer<typeof subjectPerformanceSchema>;
+export type BacklogInformation = z.infer<typeof backlogSchema>;
 export type OtherParameters = z.infer<typeof otherParametersSchema>;
 export type MentoringReport = z.infer<typeof mentoringReportSchema>;

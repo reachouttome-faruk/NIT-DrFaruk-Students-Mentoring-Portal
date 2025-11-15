@@ -99,13 +99,13 @@ export default function ReportPreview({ data, onDownload, onEdit, onNewEntry }: 
                 <TableRow>
                   <TableHead>Subject</TableHead>
                   <TableHead>Code</TableHead>
-                  <TableHead>Faculty</TableHead>
-                  <TableHead>Weaknesses</TableHead>
-                  <TableHead>CW Marks</TableHead>
-                  <TableHead>IA Marks</TableHead>
+                  <TableHead>Teaching Faculty</TableHead>
+                  <TableHead>Weakness, if any, in the Subject</TableHead>
+                  <TableHead>Class Work & Assignments</TableHead>
+                  <TableHead>IA Performance</TableHead>
                   <TableHead>Expected Outcome</TableHead>
-                  <TableHead>Mentor Remarks</TableHead>
-                  <TableHead>Current Status</TableHead>
+                  <TableHead>Mentor Remarks with Action Plan to Achieve the Outcome</TableHead>
+                  <TableHead>Status of Outcome</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -127,6 +127,36 @@ export default function ReportPreview({ data, onDownload, onEdit, onNewEntry }: 
           </div>
         </CardContent>
       </Card>
+
+      {data.backlogInformation && data.backlogInformation.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Backlog Information</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[80px]">S.No</TableHead>
+                    <TableHead>Name of the Subject with Code</TableHead>
+                    <TableHead>Action Proposed to Clear</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {data.backlogInformation.map((backlog, index) => (
+                    <TableRow key={backlog.id}>
+                      <TableCell className="font-medium">{index + 1}</TableCell>
+                      <TableCell data-testid={`text-backlog-subject-${index}`}>{backlog.subjectNameWithCode}</TableCell>
+                      <TableCell className="max-w-[400px]" data-testid={`text-backlog-action-${index}`}>{backlog.actionProposed}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader>

@@ -2,23 +2,26 @@ import { useState, useEffect } from "react";
 import ProgressStepper from "@/components/ProgressStepper";
 import StudentDetailsForm from "@/components/StudentDetailsForm";
 import SubjectPerformanceForm from "@/components/SubjectPerformanceForm";
+import BacklogInformationForm from "@/components/BacklogInformationForm";
 import OtherParametersForm from "@/components/OtherParametersForm";
 import ReportPreview from "@/components/ReportPreview";
 import { generatePDF } from "@/lib/pdfGenerator";
-import type { StudentDetails, SubjectPerformance, OtherParameters, MentoringReport } from "@shared/schema";
+import type { StudentDetails, SubjectPerformance, BacklogInformation, OtherParameters, MentoringReport } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
 
 const STEPS = [
   { label: "Student Details", step: 1 },
   { label: "Subject Performance", step: 2 },
-  { label: "Other Parameters", step: 3 },
-  { label: "Review", step: 4 },
+  { label: "Backlog Information", step: 3 },
+  { label: "Other Parameters", step: 4 },
+  { label: "Review", step: 5 },
 ];
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(1);
   const [studentDetails, setStudentDetails] = useState<StudentDetails | null>(null);
   const [subjectPerformance, setSubjectPerformance] = useState<SubjectPerformance[]>([]);
+  const [backlogInformation, setBacklogInformation] = useState<BacklogInformation[]>([]);
   const [otherParameters, setOtherParameters] = useState<OtherParameters | null>(null);
   const [logoDataUrl, setLogoDataUrl] = useState<string>("");
   const [footerDataUrl, setFooterDataUrl] = useState<string>("");
@@ -60,6 +63,7 @@ export default function Home() {
       const data = JSON.parse(saved);
       if (data.studentDetails) setStudentDetails(data.studentDetails);
       if (data.subjectPerformance) setSubjectPerformance(data.subjectPerformance);
+      if (data.backlogInformation) setBacklogInformation(data.backlogInformation);
       if (data.otherParameters) setOtherParameters(data.otherParameters);
       if (data.currentStep) setCurrentStep(data.currentStep);
     }
@@ -68,9 +72,9 @@ export default function Home() {
   useEffect(() => {
     localStorage.setItem(
       "mentoringData",
-      JSON.stringify({ studentDetails, subjectPerformance, otherParameters, currentStep })
+      JSON.stringify({ studentDetails, subjectPerformance, backlogInformation, otherParameters, currentStep })
     );
-  }, [studentDetails, subjectPerformance, otherParameters, currentStep]);
+  }, [studentDetails, subjectPerformance, backlogInformation, otherParameters, currentStep]);
 
   const handleStudentDetailsSubmit = (data: StudentDetails) => {
     setStudentDetails(data);
@@ -84,9 +88,15 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleBacklogInformationSubmit = (data: BacklogInformation[]) => {
+    setBacklogInformation(data);
+    setCurrentStep(4);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const handleOtherParametersSubmit = (data: OtherParameters) => {
     setOtherParameters(data);
-    setCurrentStep(4);
+    setCurrentStep(5);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -96,6 +106,7 @@ export default function Home() {
     const reportData: MentoringReport = {
       studentDetails,
       subjectPerformance,
+      backlogInformation,
       otherParameters,
     };
 
@@ -116,6 +127,7 @@ export default function Home() {
   const handleNewEntry = () => {
     setStudentDetails(null);
     setSubjectPerformance([]);
+    setBacklogInformation([]);
     setOtherParameters(null);
     setCurrentStep(1);
     localStorage.removeItem("mentoringData");
@@ -167,20 +179,29 @@ export default function Home() {
         )}
 
         {currentStep === 3 && (
+          <BacklogInformationForm
+            defaultValues={backlogInformation.length > 0 ? backlogInformation : undefined}
+            onSubmit={handleBacklogInformationSubmit}
+            onBack={() => setCurrentStep(2)}
+          />
+        )}
+
+        {currentStep === 4 && (
           <div className="max-w-4xl mx-auto">
             <OtherParametersForm
               defaultValues={otherParameters || undefined}
               onSubmit={handleOtherParametersSubmit}
-              onBack={() => setCurrentStep(2)}
+              onBack={() => setCurrentStep(3)}
             />
           </div>
         )}
 
-        {currentStep === 4 && studentDetails && otherParameters && (
+        {currentStep === 5 && studentDetails && otherParameters && (
           <ReportPreview
             data={{
               studentDetails,
               subjectPerformance,
+              backlogInformation,
               otherParameters,
             }}
             onDownload={handleDownloadPDF}

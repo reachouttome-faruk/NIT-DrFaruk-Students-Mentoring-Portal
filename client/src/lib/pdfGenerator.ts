@@ -93,7 +93,7 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
 
   autoTable(doc, {
     startY: yPos,
-    head: [["Subject", "Code", "Faculty", "Weaknesses", "CW Marks", "IA Marks", "Expected Outcome", "Mentor Remarks", "Current Status"]],
+    head: [["Subject", "Code", "Teaching Faculty", "Weakness, if any", "Class Work & Assignments", "IA Performance", "Expected Outcome", "Mentor Remarks with Action Plan", "Status of Outcome"]],
     body: data.subjectPerformance.map((subject) => [
       subject.subjectName,
       subject.subjectCode,
@@ -106,7 +106,7 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
       subject.currentStatus,
     ]),
     theme: "grid",
-    headStyles: { fillColor: [33, 91, 145], fontSize: 8 },
+    headStyles: { fillColor: [33, 91, 145], fontSize: 7 },
     styles: { fontSize: 7, cellPadding: 2 },
     margin: { left: 14, right: 14, bottom: 15 },
     didDrawPage: addFooter,
@@ -114,10 +114,10 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
       0: { cellWidth: 20 },
       1: { cellWidth: 15 },
       2: { cellWidth: 20 },
-      3: { cellWidth: 25 },
-      4: { cellWidth: 15 },
+      3: { cellWidth: 22 },
+      4: { cellWidth: 18 },
       5: { cellWidth: 15 },
-      6: { cellWidth: 25 },
+      6: { cellWidth: 22 },
       7: { cellWidth: 30 },
       8: { cellWidth: 20 },
     },
@@ -125,6 +125,40 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
 
   doc.addPage();
   yPos = 20;
+
+  if (data.backlogInformation && data.backlogInformation.length > 0) {
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Backlog Information", 14, yPos);
+    yPos += 5;
+
+    autoTable(doc, {
+      startY: yPos,
+      head: [["S.No", "Name of the Subject with Code", "Action Proposed to Clear"]],
+      body: data.backlogInformation.map((backlog, index) => [
+        (index + 1).toString(),
+        backlog.subjectNameWithCode,
+        backlog.actionProposed,
+      ]),
+      theme: "grid",
+      headStyles: { fillColor: [33, 91, 145], fontSize: 10 },
+      styles: { fontSize: 9, cellPadding: 3 },
+      margin: { left: 14, right: 14, bottom: 15 },
+      didDrawPage: addFooter,
+      columnStyles: {
+        0: { cellWidth: 20 },
+        1: { cellWidth: 70 },
+        2: { cellWidth: 90 },
+      },
+    });
+
+    yPos = (doc as any).lastAutoTable.finalY + 10;
+
+    if (yPos > 250) {
+      doc.addPage();
+      yPos = 20;
+    }
+  }
 
   doc.setFontSize(11);
   doc.setFont("helvetica", "bold");
