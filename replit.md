@@ -13,6 +13,9 @@ The application is fully functional with a 5-step form flow:
 
 ## Recent Changes (November 15, 2025)
 
+### Branding Update
+- Updated site title to "Navodaya Institute of Technology (Autonomous)" across all pages and PDF reports
+
 ### Subject Performance Section Field Updates
 - Renamed field titles for clarity:
   - "Faculty" → "Teaching Faculty"
@@ -38,6 +41,26 @@ Updated with new comprehensive headings:
 - Number of Parent Visits to the College
 - Other Identified & Resolved Academic/Non-Academic Issues
 - Student Grievances (if any)
+
+### Professional UI Enhancements
+- Enhanced background watermark visibility with gradient overlay (75-80% opacity)
+- Updated header with:
+  - Logo with light primary background accent
+  - Gradient text effect on institute name
+  - Semi-transparent backdrop blur effect
+  - Subtle shadow
+- Improved progress stepper with:
+  - Larger step indicators (12x12)
+  - Animated progress bars with smooth transitions
+  - Ring effects on active steps
+  - Enhanced shadows and colors
+- Enhanced card components with:
+  - Semi-transparent backgrounds (95% opacity) with backdrop blur
+  - Stronger shadows (shadow-lg) for depth
+  - Hover effects (shadow-xl on hover)
+  - Smooth transitions
+- Updated shadow system throughout the app for better depth perception
+- Added content wrapper with subtle background and blur effect
 
 ## Project Architecture
 

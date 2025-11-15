@@ -140,75 +140,81 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center gap-3">
-            <img 
-              src="/navodaya-logo.png" 
-              alt="Navodaya Institute of Technology (Autonomous)" 
-              className="w-12 h-12 object-contain" 
-              data-testid="logo-nit" 
-            />
+      <header className="border-b bg-card/95 backdrop-blur-sm shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center gap-4">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <img 
+                src="/navodaya-logo.png" 
+                alt="Navodaya Institute of Technology (Autonomous)" 
+                className="w-12 h-12 object-contain" 
+                data-testid="logo-nit" 
+              />
+            </div>
             <div>
-              <h1 className="text-xl font-semibold">Navodaya Institute of Technology (Autonomous)</h1>
-              <p className="text-sm text-muted-foreground">Students Mentoring Portal</p>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                Navodaya Institute of Technology (Autonomous)
+              </h1>
+              <p className="text-sm text-muted-foreground mt-1">Students Mentoring Portal</p>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="border-b bg-card">
+      <div className="border-b bg-card/90 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ProgressStepper currentStep={currentStep} steps={STEPS} />
         </div>
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {currentStep === 1 && (
-          <div className="max-w-4xl mx-auto">
-            <StudentDetailsForm defaultValues={studentDetails || undefined} onSubmit={handleStudentDetailsSubmit} />
-          </div>
-        )}
+        <div className="backdrop-blur-sm bg-background/40 rounded-lg p-1">
+          {currentStep === 1 && (
+            <div className="max-w-4xl mx-auto">
+              <StudentDetailsForm defaultValues={studentDetails || undefined} onSubmit={handleStudentDetailsSubmit} />
+            </div>
+          )}
 
-        {currentStep === 2 && (
-          <SubjectPerformanceForm
-            defaultValues={subjectPerformance.length > 0 ? subjectPerformance : undefined}
-            onSubmit={handleSubjectPerformanceSubmit}
-            onBack={() => setCurrentStep(1)}
-          />
-        )}
-
-        {currentStep === 3 && (
-          <BacklogInformationForm
-            defaultValues={backlogInformation.length > 0 ? backlogInformation : undefined}
-            onSubmit={handleBacklogInformationSubmit}
-            onBack={() => setCurrentStep(2)}
-          />
-        )}
-
-        {currentStep === 4 && (
-          <div className="max-w-4xl mx-auto">
-            <OtherParametersForm
-              defaultValues={otherParameters || undefined}
-              onSubmit={handleOtherParametersSubmit}
-              onBack={() => setCurrentStep(3)}
+          {currentStep === 2 && (
+            <SubjectPerformanceForm
+              defaultValues={subjectPerformance.length > 0 ? subjectPerformance : undefined}
+              onSubmit={handleSubjectPerformanceSubmit}
+              onBack={() => setCurrentStep(1)}
             />
-          </div>
-        )}
+          )}
 
-        {currentStep === 5 && studentDetails && otherParameters && (
-          <ReportPreview
-            data={{
-              studentDetails,
-              subjectPerformance,
-              backlogInformation,
-              otherParameters,
-            }}
-            onDownload={handleDownloadPDF}
-            onEdit={handleEdit}
-            onNewEntry={handleNewEntry}
-          />
-        )}
+          {currentStep === 3 && (
+            <BacklogInformationForm
+              defaultValues={backlogInformation.length > 0 ? backlogInformation : undefined}
+              onSubmit={handleBacklogInformationSubmit}
+              onBack={() => setCurrentStep(2)}
+            />
+          )}
+
+          {currentStep === 4 && (
+            <div className="max-w-4xl mx-auto">
+              <OtherParametersForm
+                defaultValues={otherParameters || undefined}
+                onSubmit={handleOtherParametersSubmit}
+                onBack={() => setCurrentStep(3)}
+              />
+            </div>
+          )}
+
+          {currentStep === 5 && studentDetails && otherParameters && (
+            <ReportPreview
+              data={{
+                studentDetails,
+                subjectPerformance,
+                backlogInformation,
+                otherParameters,
+              }}
+              onDownload={handleDownloadPDF}
+              onEdit={handleEdit}
+              onNewEntry={handleNewEntry}
+            />
+          )}
+        </div>
       </main>
     </div>
   );
