@@ -62,6 +62,19 @@ Updated with new comprehensive headings:
 - Updated shadow system throughout the app for better depth perception
 - Added content wrapper with subtle background and blur effect
 
+### PDF Watermark Integration (Production-Ready)
+- Integrated NIT Admin Block image as watermarked background in generated PDFs
+- Watermark appears on **every page** (first page, all autoTable pages, and manually created pages)
+- Renders **beneath content** to ensure readability is not compromised
+- Set at 15% opacity for professional, subtle appearance
+- **Dynamically scaled** using actual image dimensions to maintain proper aspect ratio
+- **Error handling**: Gracefully handles missing watermark image with user notification via toast
+- Implementation details:
+  - Uses `willDrawPage` hook for autoTable sections to draw watermark before content
+  - Explicit `addWatermark()` call after every manual `doc.addPage()` for consistency
+  - Captures image dimensions during preload for accurate aspect ratio calculation
+  - Graphics state management ensures watermark opacity doesn't affect other content
+
 ## Project Architecture
 
 ### Tech Stack

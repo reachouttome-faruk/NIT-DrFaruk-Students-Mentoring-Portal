@@ -25,6 +25,8 @@ export default function Home() {
   const [otherParameters, setOtherParameters] = useState<OtherParameters | null>(null);
   const [logoDataUrl, setLogoDataUrl] = useState<string>("");
   const [footerDataUrl, setFooterDataUrl] = useState<string>("");
+  const [watermarkDataUrl, setWatermarkDataUrl] = useState<string>("");
+  const [watermarkDimensions, setWatermarkDimensions] = useState<{ width: number; height: number } | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -55,6 +57,29 @@ export default function Home() {
       }
     };
     footerImg.src = "/footer-bar.png";
+
+    const watermarkImg = new Image();
+    watermarkImg.crossOrigin = "anonymous";
+    watermarkImg.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = watermarkImg.width;
+      canvas.height = watermarkImg.height;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.drawImage(watermarkImg, 0, 0);
+        setWatermarkDataUrl(canvas.toDataURL("image/png"));
+        setWatermarkDimensions({ width: watermarkImg.width, height: watermarkImg.height });
+      }
+    };
+    watermarkImg.onerror = () => {
+      console.error("Failed to load watermark image");
+      toast({
+        title: "Warning",
+        description: "College watermark image could not be loaded. PDF will be generated without watermark.",
+        variant: "destructive",
+      });
+    };
+    watermarkImg.src = "/nit-watermark.png";
   }, []);
 
   useEffect(() => {
@@ -110,7 +135,7 @@ export default function Home() {
       otherParameters,
     };
 
-    const doc = generatePDF(reportData, logoDataUrl, footerDataUrl);
+    const doc = generatePDF(reportData, logoDataUrl, footerDataUrl, watermarkDataUrl, watermarkDimensions);
     doc.save(`Mentoring_Report_${studentDetails.studentName.replace(/\s+/g, "_")}.pdf`);
     
     toast({

@@ -2,11 +2,31 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import type { MentoringReport } from "@shared/schema";
 
-export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerDataUrl?: string) {
+export function generatePDF(
+  data: MentoringReport, 
+  logoDataUrl?: string, 
+  footerDataUrl?: string, 
+  watermarkDataUrl?: string,
+  watermarkDimensions?: { width: number; height: number } | null
+) {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.width;
   const pageHeight = doc.internal.pageSize.height;
   let yPos = 20;
+
+  const addWatermark = () => {
+    if (watermarkDataUrl && watermarkDimensions) {
+      doc.saveGraphicsState();
+      (doc as any).setGState(new (doc as any).GState({ opacity: 0.15 }));
+      const aspectRatio = watermarkDimensions.width / watermarkDimensions.height;
+      const watermarkWidth = pageWidth * 0.8;
+      const watermarkHeight = watermarkWidth / aspectRatio;
+      const xPos = (pageWidth - watermarkWidth) / 2;
+      const yPos = (pageHeight - watermarkHeight) / 2;
+      doc.addImage(watermarkDataUrl, "PNG", xPos, yPos, watermarkWidth, watermarkHeight);
+      doc.restoreGraphicsState();
+    }
+  };
 
   const addFooter = () => {
     if (footerDataUrl) {
@@ -14,6 +34,8 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
       doc.addImage(footerDataUrl, "PNG", 0, pageHeight - footerHeight, pageWidth, footerHeight);
     }
   };
+
+  addWatermark();
 
   if (logoDataUrl) {
     doc.addImage(logoDataUrl, "PNG", pageWidth / 2 - 15, yPos, 30, 30);
@@ -54,6 +76,7 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
     headStyles: { fillColor: [33, 91, 145], fontSize: 10 },
     styles: { fontSize: 9 },
     margin: { left: 14, right: 14, bottom: 15 },
+    willDrawPage: addWatermark,
     didDrawPage: addFooter,
   });
 
@@ -76,6 +99,7 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
     headStyles: { fillColor: [33, 91, 145], fontSize: 10 },
     styles: { fontSize: 9 },
     margin: { left: 14, right: 14, bottom: 15 },
+    willDrawPage: addWatermark,
     didDrawPage: addFooter,
   });
 
@@ -83,6 +107,7 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
 
   if (yPos > 250) {
     doc.addPage();
+    addWatermark();
     yPos = 20;
   }
 
@@ -109,6 +134,7 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
     headStyles: { fillColor: [33, 91, 145], fontSize: 7 },
     styles: { fontSize: 7, cellPadding: 2 },
     margin: { left: 14, right: 14, bottom: 15 },
+    willDrawPage: addWatermark,
     didDrawPage: addFooter,
     columnStyles: {
       0: { cellWidth: 20 },
@@ -124,6 +150,7 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
   });
 
   doc.addPage();
+  addWatermark();
   yPos = 20;
 
   if (data.backlogInformation && data.backlogInformation.length > 0) {
@@ -144,7 +171,8 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
       headStyles: { fillColor: [33, 91, 145], fontSize: 10 },
       styles: { fontSize: 9, cellPadding: 3 },
       margin: { left: 14, right: 14, bottom: 15 },
-      didDrawPage: addFooter,
+      willDrawPage: addWatermark,
+    didDrawPage: addFooter,
       columnStyles: {
         0: { cellWidth: 20 },
         1: { cellWidth: 70 },
@@ -156,6 +184,7 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
 
     if (yPos > 250) {
       doc.addPage();
+      addWatermark();
       yPos = 20;
     }
   }
@@ -188,6 +217,7 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
     headStyles: { fillColor: [33, 91, 145], fontSize: 10 },
     styles: { fontSize: 9, cellPadding: 3 },
     margin: { left: 14, right: 14, bottom: 15 },
+    willDrawPage: addWatermark,
     didDrawPage: addFooter,
     columnStyles: {
       0: { cellWidth: 60 },
