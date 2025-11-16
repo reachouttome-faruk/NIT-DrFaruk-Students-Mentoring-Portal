@@ -174,7 +174,7 @@ export function generatePDF(data: MentoringReport, logoDataUrl?: string, footerD
       ["Attendance and Alerts Issued (to Parents/Guardians)", otherParams.attendanceAlerts],
       ["Skill Possession - Technical / Programming Skills", otherParams.technicalProgrammingSkills],
       ["Skill Possession - Aptitude Skills", otherParams.aptitudeSkills],
-      ["Participation in NIT Clubs or Certification Trainings", otherParams.clubsTrainings],
+      ["Participation in NIT Clubs or Certification Done", otherParams.clubsTrainings],
       ["Participation in Co-Curricular Activities (Workshops, Seminars, Guest Lectures, etc.)", otherParams.coCurricularActivities],
       ["Participation in Extra-Curricular Activities (Sports, Cultural, NSS, etc.)", otherParams.extraCurricularActivities],
       ["Ranks / Awards / Recognitions at College or University Level", otherParams.ranksAwardsRecognitions],

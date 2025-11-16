@@ -182,7 +182,7 @@ export default function ReportPreview({ data, onDownload, onEdit, onNewEntry }: 
                 <TableCell>{data.otherParameters.aptitudeSkills}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium">Participation in NIT Clubs or Certification Trainings</TableCell>
+                <TableCell className="font-medium">Participation in NIT Clubs or Certification Done</TableCell>
                 <TableCell>{data.otherParameters.clubsTrainings}</TableCell>
               </TableRow>
               <TableRow>

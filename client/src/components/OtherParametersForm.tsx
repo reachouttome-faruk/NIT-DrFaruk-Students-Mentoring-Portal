@@ -121,7 +121,7 @@ export default function OtherParametersForm({ defaultValues, onSubmit, onBack }:
               name="clubsTrainings"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Participation in NIT Clubs or Certification Trainings</FormLabel>
+                  <FormLabel>Participation in NIT Clubs or Certification Done</FormLabel>
                   <FormControl>
                     <Textarea placeholder="Member of Coding Club, AWS Certification..." data-testid="input-clubs-trainings" {...field} />
                   </FormControl>

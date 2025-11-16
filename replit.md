@@ -37,7 +37,7 @@ Updated with new comprehensive headings organized into 5 categories:
 - Aptitude Skills
 
 **3. Activities & Achievements:**
-- Participation in NIT Clubs or Certification Trainings
+- Participation in NIT Clubs or Certification Done
 - Participation in Co-Curricular Activities (Workshops, Seminars, Guest Lectures, etc.)
 - Participation in Extra-Curricular Activities (Sports, Cultural, NSS, etc.)
 - Ranks / Awards / Recognitions at College or University Level
