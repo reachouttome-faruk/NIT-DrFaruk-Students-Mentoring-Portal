@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { otherParametersSchema, type OtherParameters } from "@shared/schema";
@@ -37,6 +37,34 @@ function OtherParametersForm({ defaultValues, onSubmit, onBack }: OtherParameter
       studentGrievances: "",
     },
   });
+
+  useEffect(() => {
+    if (defaultValues) {
+      form.reset(defaultValues);
+    } else {
+      form.reset({
+        academicTrackSGPA: "",
+        attendanceAlerts: "",
+        skillsPossession: "",
+        skillBasedCertificates: "",
+        coCurricularActivities: "",
+        extraCurricularActivities: "",
+        ranksAwardsRecognitions: "",
+        internshipTrainingUndertaken: "",
+        internshipDuration: "",
+        internshipSkillsGained: "",
+        projectTitle: "",
+        projectDescription: "",
+        technicalPapersPublished: "",
+        indisciplinaryActivities: "",
+        currentHealthStatus: "",
+        parentVisits: "",
+        otherIssuesResolved: "",
+        studentGrievances: "",
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValues]);
 
   return (
     <Form {...form}>

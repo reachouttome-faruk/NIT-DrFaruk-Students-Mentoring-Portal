@@ -1,4 +1,4 @@
-import { useState, memo, useCallback } from "react";
+import { useState, memo, useCallback, useEffect } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,14 @@ function BacklogInformationForm({ defaultValues, onSubmit, onBack }: BacklogInfo
       ? defaultValues
       : []
   );
+
+  useEffect(() => {
+    if (defaultValues && defaultValues.length > 0) {
+      setBacklogs(defaultValues);
+    } else if (backlogs.length > 0 && (!defaultValues || defaultValues.length === 0)) {
+      setBacklogs([]);
+    }
+  }, [defaultValues, backlogs.length]);
 
   const addBacklog = useCallback(() => {
     setBacklogs((prev) => [

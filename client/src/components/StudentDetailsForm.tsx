@@ -1,4 +1,4 @@
-import { useState, memo, useCallback } from "react";
+import { useState, memo, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { studentDetailsSchema, type StudentDetails } from "@shared/schema";
@@ -33,6 +33,30 @@ function StudentDetailsForm({ defaultValues, onSubmit }: StudentDetailsFormProps
       mentorDepartment: "",
     },
   });
+
+  useEffect(() => {
+    if (defaultValues) {
+      form.reset(defaultValues);
+      setPhotoPreview(defaultValues.studentPhotoDataUrl);
+    } else {
+      form.reset({
+        studentName: "",
+        usn: "",
+        fatherName: "",
+        studentPhotoDataUrl: "",
+        class: "",
+        section: "",
+        attendanceAsOnDate: "",
+        currentCGPA: "",
+        mentoringPeriod: "",
+        mentorName: "",
+        mentorDesignation: "",
+        mentorDepartment: "",
+      });
+      setPhotoPreview(undefined);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValues]);
 
   const handlePhotoUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

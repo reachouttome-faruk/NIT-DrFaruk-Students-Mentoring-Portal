@@ -1,4 +1,4 @@
-import { useState, memo, useCallback } from "react";
+import { useState, memo, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -35,6 +35,27 @@ function SubjectPerformanceForm({ defaultValues, onSubmit, onBack }: SubjectPerf
           },
         ]
   );
+
+  useEffect(() => {
+    if (defaultValues && defaultValues.length > 0) {
+      setSubjects(defaultValues);
+    } else if ((!defaultValues || defaultValues.length === 0) && subjects.length > 1) {
+      setSubjects([
+        {
+          id: crypto.randomUUID(),
+          subjectName: "",
+          subjectCode: "",
+          teachingFaculty: "",
+          weaknesses: "",
+          classworkMarks: "",
+          internalMarks: "",
+          expectedOutcome: "",
+          mentorRemarks: "",
+          currentStatus: "",
+        },
+      ]);
+    }
+  }, [defaultValues, subjects.length]);
 
   const addSubject = useCallback(() => {
     setSubjects((prev) => [
