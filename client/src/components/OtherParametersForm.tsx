@@ -28,7 +28,7 @@ export default function OtherParametersForm({ defaultValues, onSubmit, onBack }:
       internshipSkillsGained: "",
       projectTitle: "",
       projectDescription: "",
-      projectOutcome: "",
+      technicalPapersPublished: "",
       indisciplinaryActivities: "",
       currentHealthStatus: "",
       parentVisits: "",
@@ -207,13 +207,13 @@ export default function OtherParametersForm({ defaultValues, onSubmit, onBack }:
             </div>
 
             <div className="space-y-4 pt-4 border-t">
-              <h4 className="font-semibold text-sm">Projects and Research</h4>
+              <h4 className="font-semibold text-sm">Projects (Micro/Minor/Major) if any:</h4>
               <FormField
                 control={form.control}
                 name="projectTitle"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Project/Research Title</FormLabel>
+                    <FormLabel>Title</FormLabel>
                     <FormControl>
                       <Textarea placeholder="Smart Agriculture Monitoring System..." data-testid="input-project-title" {...field} />
                     </FormControl>
@@ -234,14 +234,17 @@ export default function OtherParametersForm({ defaultValues, onSubmit, onBack }:
                   </FormItem>
                 )}
               />
+            </div>
+
+            <div className="space-y-4 pt-4 border-t">
               <FormField
                 control={form.control}
-                name="projectOutcome"
+                name="technicalPapersPublished"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Outcome</FormLabel>
+                    <FormLabel>Technical Papers Published/Presented in Journal/Conferences/Symposium</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Successfully deployed on 5 farms, reduced water usage by 30%..." data-testid="input-project-outcome" {...field} />
+                      <Textarea placeholder="Published paper on 'AI in Healthcare' in IEEE Conference 2024..." data-testid="input-technical-papers" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

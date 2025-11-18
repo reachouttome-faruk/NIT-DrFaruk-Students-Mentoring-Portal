@@ -47,7 +47,7 @@ export const otherParametersSchema = z.object({
   internshipSkillsGained: z.string(),
   projectTitle: z.string(),
   projectDescription: z.string(),
-  projectOutcome: z.string(),
+  technicalPapersPublished: z.string(),
   indisciplinaryActivities: z.string(),
   currentHealthStatus: z.string(),
   parentVisits: z.string(),

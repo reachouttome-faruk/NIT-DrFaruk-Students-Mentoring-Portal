@@ -13,6 +13,13 @@ The application is fully functional with a 5-step form flow:
 
 ## Recent Changes (November 18, 2025)
 
+### Projects Section Updates
+- Renamed "Projects and Research" to "Projects (Micro/Minor/Major) if any:"
+- Removed "Outcome" field from Projects section
+- Added new field: "Technical Papers Published/Presented in Journal/Conferences/Symposium"
+- Updated field labels: "Project/Research Title" → "Title", "Project/Research Description" → "Description"
+- All changes reflected in form, preview, and PDF output
+
 ### Skill Possession Section Restructuring
 - Combined "Technical / Programming Skills" and "Aptitude Skills" into single field: "Technical / Programming / Aptitude Skills"
 - Added new field: "Skill Based Certificates (online/offline)"
@@ -81,9 +88,9 @@ Updated with new comprehensive headings organized into 5 categories:
 - Internship/Training Undertaken
 - Duration
 - Skills Gained
-- Project/Research Title
-- Description
-- Outcome
+- Project Title (Micro/Minor/Major)
+- Project Description
+- Technical Papers Published/Presented in Journal/Conferences/Symposium
 
 **5. Other Information:**
 - Involvement in Any In-disciplinary Activities

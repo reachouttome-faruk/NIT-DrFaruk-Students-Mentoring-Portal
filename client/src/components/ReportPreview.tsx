@@ -224,16 +224,16 @@ export default function ReportPreview({ data, onDownload, onEdit, onNewEntry }: 
                 <TableCell>{data.otherParameters.internshipSkillsGained}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium">Project/Research Title</TableCell>
+                <TableCell className="font-medium">Project Title (Micro/Minor/Major)</TableCell>
                 <TableCell>{data.otherParameters.projectTitle}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium">Project/Research Description</TableCell>
+                <TableCell className="font-medium">Project Description</TableCell>
                 <TableCell>{data.otherParameters.projectDescription}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium">Project/Research Outcome</TableCell>
-                <TableCell>{data.otherParameters.projectOutcome}</TableCell>
+                <TableCell className="font-medium">Technical Papers Published/Presented in Journal/Conferences/Symposium</TableCell>
+                <TableCell>{data.otherParameters.technicalPapersPublished}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium">Involvement in Any In-disciplinary Activities</TableCell>
