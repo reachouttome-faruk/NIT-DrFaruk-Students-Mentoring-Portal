@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { studentDetailsSchema, type StudentDetails } from "@shared/schema";
@@ -13,7 +13,7 @@ interface StudentDetailsFormProps {
   onSubmit: (data: StudentDetails) => void;
 }
 
-export default function StudentDetailsForm({ defaultValues, onSubmit }: StudentDetailsFormProps) {
+function StudentDetailsForm({ defaultValues, onSubmit }: StudentDetailsFormProps) {
   const [photoPreview, setPhotoPreview] = useState<string | undefined>(defaultValues?.studentPhotoDataUrl);
 
   const form = useForm<StudentDetails>({
@@ -34,7 +34,7 @@ export default function StudentDetailsForm({ defaultValues, onSubmit }: StudentD
     },
   });
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -45,12 +45,12 @@ export default function StudentDetailsForm({ defaultValues, onSubmit }: StudentD
       };
       reader.readAsDataURL(file);
     }
-  };
+  }, [form]);
 
-  const removePhoto = () => {
+  const removePhoto = useCallback(() => {
     setPhotoPreview(undefined);
     form.setValue("studentPhotoDataUrl", "");
-  };
+  }, [form]);
 
   return (
     <Form {...form}>
@@ -278,3 +278,5 @@ export default function StudentDetailsForm({ defaultValues, onSubmit }: StudentD
     </Form>
   );
 }
+
+export default memo(StudentDetailsForm);

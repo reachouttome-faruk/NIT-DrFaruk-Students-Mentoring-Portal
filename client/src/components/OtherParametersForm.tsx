@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { otherParametersSchema, type OtherParameters } from "@shared/schema";
@@ -12,7 +13,7 @@ interface OtherParametersFormProps {
   onBack: () => void;
 }
 
-export default function OtherParametersForm({ defaultValues, onSubmit, onBack }: OtherParametersFormProps) {
+function OtherParametersForm({ defaultValues, onSubmit, onBack }: OtherParametersFormProps) {
   const form = useForm<OtherParameters>({
     resolver: zodResolver(otherParametersSchema),
     defaultValues: defaultValues || {
@@ -339,3 +340,5 @@ export default function OtherParametersForm({ defaultValues, onSubmit, onBack }:
     </Form>
   );
 }
+
+export default memo(OtherParametersForm);

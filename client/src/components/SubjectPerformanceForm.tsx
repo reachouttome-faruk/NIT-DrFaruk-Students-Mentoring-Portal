@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -16,7 +16,7 @@ interface SubjectPerformanceFormProps {
   onBack: () => void;
 }
 
-export default function SubjectPerformanceForm({ defaultValues, onSubmit, onBack }: SubjectPerformanceFormProps) {
+function SubjectPerformanceForm({ defaultValues, onSubmit, onBack }: SubjectPerformanceFormProps) {
   const [subjects, setSubjects] = useState<SubjectPerformance[]>(
     defaultValues && defaultValues.length > 0
       ? defaultValues
@@ -36,9 +36,9 @@ export default function SubjectPerformanceForm({ defaultValues, onSubmit, onBack
         ]
   );
 
-  const addSubject = () => {
-    setSubjects([
-      ...subjects,
+  const addSubject = useCallback(() => {
+    setSubjects((prev) => [
+      ...prev,
       {
         id: crypto.randomUUID(),
         subjectName: "",
@@ -52,19 +52,22 @@ export default function SubjectPerformanceForm({ defaultValues, onSubmit, onBack
         currentStatus: "",
       },
     ]);
-  };
+  }, []);
 
-  const removeSubject = (id: string) => {
-    if (subjects.length > 1) {
-      setSubjects(subjects.filter((s) => s.id !== id));
-    }
-  };
+  const removeSubject = useCallback((id: string) => {
+    setSubjects((prev) => {
+      if (prev.length > 1) {
+        return prev.filter((s) => s.id !== id);
+      }
+      return prev;
+    });
+  }, []);
 
-  const updateSubject = (id: string, field: keyof SubjectPerformance, value: string) => {
-    setSubjects(subjects.map((s) => (s.id === id ? { ...s, [field]: value } : s)));
-  };
+  const updateSubject = useCallback((id: string, field: keyof SubjectPerformance, value: string) => {
+    setSubjects((prev) => prev.map((s) => (s.id === id ? { ...s, [field]: value } : s)));
+  }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     const valid = subjects.every(
       (s) => s.subjectName && s.subjectCode && s.teachingFaculty
     );
@@ -73,7 +76,7 @@ export default function SubjectPerformanceForm({ defaultValues, onSubmit, onBack
     } else {
       alert("Please fill in required fields (Subject Name, Code, and Teaching Faculty) for all subjects");
     }
-  };
+  }, [subjects, onSubmit]);
 
   return (
     <div className="space-y-6">
@@ -217,3 +220,5 @@ export default function SubjectPerformanceForm({ defaultValues, onSubmit, onBack
     </div>
   );
 }
+
+export default memo(SubjectPerformanceForm);

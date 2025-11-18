@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo, useCallback } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,33 +13,33 @@ interface BacklogInformationFormProps {
   onBack: () => void;
 }
 
-export default function BacklogInformationForm({ defaultValues, onSubmit, onBack }: BacklogInformationFormProps) {
+function BacklogInformationForm({ defaultValues, onSubmit, onBack }: BacklogInformationFormProps) {
   const [backlogs, setBacklogs] = useState<BacklogInformation[]>(
     defaultValues && defaultValues.length > 0
       ? defaultValues
       : []
   );
 
-  const addBacklog = () => {
-    setBacklogs([
-      ...backlogs,
+  const addBacklog = useCallback(() => {
+    setBacklogs((prev) => [
+      ...prev,
       {
         id: crypto.randomUUID(),
         subjectNameWithCode: "",
         actionProposed: "",
       },
     ]);
-  };
+  }, []);
 
-  const removeBacklog = (id: string) => {
-    setBacklogs(backlogs.filter((b) => b.id !== id));
-  };
+  const removeBacklog = useCallback((id: string) => {
+    setBacklogs((prev) => prev.filter((b) => b.id !== id));
+  }, []);
 
-  const updateBacklog = (id: string, field: keyof BacklogInformation, value: string) => {
-    setBacklogs(backlogs.map((b) => (b.id === id ? { ...b, [field]: value } : b)));
-  };
+  const updateBacklog = useCallback((id: string, field: keyof BacklogInformation, value: string) => {
+    setBacklogs((prev) => prev.map((b) => (b.id === id ? { ...b, [field]: value } : b)));
+  }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     if (backlogs.length > 0) {
       const valid = backlogs.every(
         (b) => b.subjectNameWithCode && b.actionProposed
@@ -50,7 +50,7 @@ export default function BacklogInformationForm({ defaultValues, onSubmit, onBack
       }
     }
     onSubmit(backlogs);
-  };
+  }, [backlogs, onSubmit]);
 
   return (
     <div className="space-y-6">
@@ -134,3 +134,5 @@ export default function BacklogInformationForm({ defaultValues, onSubmit, onBack
     </div>
   );
 }
+
+export default memo(BacklogInformationForm);
