@@ -14,7 +14,7 @@ The application is fully functional with a 5-step form flow:
 ## Recent Changes (November 17, 2025)
 
 ### Student Information Section Enhancements
-- Added University Registration Number (USN) field - required
+- Added Student USN field - required
 - Added Father's Name field - required
 - Added Student Photo Upload with preview functionality
   - Supports image upload and preview

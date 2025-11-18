@@ -81,7 +81,7 @@ export default function StudentDetailsForm({ defaultValues, onSubmit }: StudentD
                   name="usn"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>University Registration Number (USN) *</FormLabel>
+                      <FormLabel>Student USN *</FormLabel>
                       <FormControl>
                         <Input placeholder="Enter USN" data-testid="input-usn" {...field} />
                       </FormControl>
