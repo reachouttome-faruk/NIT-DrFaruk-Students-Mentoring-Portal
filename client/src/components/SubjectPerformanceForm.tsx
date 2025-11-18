@@ -39,23 +39,9 @@ function SubjectPerformanceForm({ defaultValues, onSubmit, onBack }: SubjectPerf
   useEffect(() => {
     if (defaultValues && defaultValues.length > 0) {
       setSubjects(defaultValues);
-    } else if ((!defaultValues || defaultValues.length === 0) && subjects.length > 1) {
-      setSubjects([
-        {
-          id: crypto.randomUUID(),
-          subjectName: "",
-          subjectCode: "",
-          teachingFaculty: "",
-          weaknesses: "",
-          classworkMarks: "",
-          internalMarks: "",
-          expectedOutcome: "",
-          mentorRemarks: "",
-          currentStatus: "",
-        },
-      ]);
     }
-  }, [defaultValues, subjects.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValues]);
 
   const addSubject = useCallback(() => {
     setSubjects((prev) => [

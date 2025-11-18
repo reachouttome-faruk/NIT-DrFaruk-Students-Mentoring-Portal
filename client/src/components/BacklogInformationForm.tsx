@@ -23,10 +23,9 @@ function BacklogInformationForm({ defaultValues, onSubmit, onBack }: BacklogInfo
   useEffect(() => {
     if (defaultValues && defaultValues.length > 0) {
       setBacklogs(defaultValues);
-    } else if (backlogs.length > 0 && (!defaultValues || defaultValues.length === 0)) {
-      setBacklogs([]);
     }
-  }, [defaultValues, backlogs.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValues]);
 
   const addBacklog = useCallback(() => {
     setBacklogs((prev) => [
